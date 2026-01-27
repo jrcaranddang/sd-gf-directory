@@ -8,6 +8,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Anime.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.2/anime.min.js" integrity="sha512-aNMyYYxdIxIaot0Y1/PLuEu3eipGCmsEUBrUq+7aVyPGMFH8z0eTP0tkqAvv34fzN6z+201d3T8HPb1svWSKHQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    
     <style>
         * {
             margin: 0;
@@ -509,28 +513,37 @@
             opacity: 0.7;
         }
 
-        /* Loading Animation */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
+        /* Initial state for anime.js animations */
         .restaurant-card {
-            animation: fadeIn 0.6s ease-out backwards;
+            opacity: 0;
+            transform: translateY(30px);
         }
 
-        .restaurant-card:nth-child(1) { animation-delay: 0.05s; }
-        .restaurant-card:nth-child(2) { animation-delay: 0.1s; }
-        .restaurant-card:nth-child(3) { animation-delay: 0.15s; }
-        .restaurant-card:nth-child(4) { animation-delay: 0.2s; }
-        .restaurant-card:nth-child(5) { animation-delay: 0.25s; }
-        .restaurant-card:nth-child(6) { animation-delay: 0.3s; }
+        .hero-content {
+            opacity: 0;
+        }
+
+        .stat-item {
+            opacity: 0;
+            transform: scale(0.8);
+        }
+
+        .search-filter {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
+
+        /* Reduce motion for accessibility */
+        @media (prefers-reduced-motion: reduce) {
+            .restaurant-card,
+            .hero-content,
+            .stat-item,
+            .search-filter {
+                opacity: 1 !important;
+                transform: none !important;
+                transition: none !important;
+            }
+        }
 
         /* Responsive Design */
         @media (max-width: 768px) {
@@ -1266,6 +1279,380 @@
 
         // Initial render
         renderRestaurants(restaurants);
+
+        // ==========================================
+        // ANIME.JS ANIMATIONS
+        // ==========================================
+
+        // Check if user prefers reduced motion
+        const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        if (!prefersReducedMotion) {
+            // Create master timeline for page load
+            const pageLoadTimeline = anime.timeline({
+                easing: 'easeOutExpo'
+            });
+
+            // 1. HERO SECTION - Layered entrance animation
+            pageLoadTimeline
+                .add({
+                    targets: '.hero-content',
+                    opacity: [0, 1],
+                    translateY: [50, 0],
+                    duration: 1200,
+                    easing: 'easeOutCubic'
+                })
+                .add({
+                    targets: '.hero-icon',
+                    scale: [0, 1],
+                    rotate: [-180, 0],
+                    duration: 800,
+                    easing: 'easeOutBack'
+                }, '-=1000')
+                .add({
+                    targets: '.hero h1',
+                    opacity: [0, 1],
+                    translateY: [30, 0],
+                    duration: 800
+                }, '-=600')
+                .add({
+                    targets: '.hero-subtitle',
+                    opacity: [0, 1],
+                    translateY: [20, 0],
+                    duration: 600
+                }, '-=400')
+                .add({
+                    targets: '.hero-cta',
+                    scale: [0.8, 1],
+                    opacity: [0, 1],
+                    duration: 500,
+                    easing: 'easeOutBack'
+                }, '-=200');
+
+            // 2. STATS BAR - Staggered entrance with count-up animation
+            pageLoadTimeline.add({
+                targets: '.stat-item',
+                opacity: [0, 1],
+                scale: [0.8, 1],
+                duration: 600,
+                delay: anime.stagger(150), // Stagger by 150ms
+                easing: 'easeOutBack'
+            }, '-=400');
+
+            // Count-up animation for stat numbers
+            setTimeout(() => {
+                const statNumbers = document.querySelectorAll('.stat-number');
+                statNumbers.forEach((el) => {
+                    const target = parseInt(el.textContent);
+                    const obj = { value: 0 };
+                    
+                    anime({
+                        targets: obj,
+                        value: target,
+                        duration: 2000,
+                        easing: 'easeOutExpo',
+                        round: 1,
+                        update: function() {
+                            el.textContent = obj.value;
+                        }
+                    });
+                });
+            }, 800);
+
+            // 3. SEARCH & FILTER - Slide down animation
+            pageLoadTimeline.add({
+                targets: '.search-filter',
+                opacity: [0, 1],
+                translateY: [-20, 0],
+                duration: 800,
+                easing: 'easeOutCubic'
+            }, '-=200');
+
+            // 4. RESTAURANT CARDS - Staggered entrance (grid pattern)
+            setTimeout(() => {
+                anime({
+                    targets: '.restaurant-card',
+                    opacity: [0, 1],
+                    translateY: [30, 0],
+                    scale: [0.95, 1],
+                    duration: 800,
+                    delay: anime.stagger(100, {grid: [3, 14], from: 'first'}), // Stagger in grid pattern
+                    easing: 'easeOutCubic'
+                });
+            }, 1000);
+
+            // 5. CARD HOVER ANIMATIONS - Scale and lift effect
+            const cards = document.querySelectorAll('.restaurant-card');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    anime({
+                        targets: this,
+                        scale: 1.03,
+                        duration: 400,
+                        easing: 'easeOutQuad'
+                    });
+                    
+                    // Animate card header background
+                    anime({
+                        targets: this.querySelector('.card-header'),
+                        background: ['linear-gradient(135deg, #2d6a4f 0%, #40916c 100%)', 
+                                    'linear-gradient(135deg, #40916c 0%, #52b788 100%)'],
+                        duration: 400,
+                        easing: 'easeOutQuad'
+                    });
+                });
+
+                card.addEventListener('mouseleave', function() {
+                    anime({
+                        targets: this,
+                        scale: 1,
+                        duration: 400,
+                        easing: 'easeOutQuad'
+                    });
+                    
+                    anime({
+                        targets: this.querySelector('.card-header'),
+                        background: ['linear-gradient(135deg, #40916c 0%, #52b788 100%)',
+                                    'linear-gradient(135deg, #2d6a4f 0%, #40916c 100%)'],
+                        duration: 400,
+                        easing: 'easeOutQuad'
+                    });
+                });
+            });
+
+            // 6. HERO CTA PULSE - Continuous subtle animation
+            anime({
+                targets: '.hero-cta',
+                scale: [1, 1.05, 1],
+                duration: 2000,
+                easing: 'easeInOutQuad',
+                loop: true
+            });
+
+            // 7. FOOTER HEART - Heartbeat animation
+            anime({
+                targets: '.footer-heart',
+                scale: [1, 1.2, 1],
+                duration: 1500,
+                easing: 'easeInOutQuad',
+                loop: true
+            });
+        }
+
+        // ==========================================
+        // FILTER ANIMATIONS WITH ANIME.JS
+        // ==========================================
+
+        // Override renderRestaurants to add smooth filter transitions
+        const originalRenderRestaurants = renderRestaurants;
+        renderRestaurants = function(filteredRestaurants) {
+            const grid = document.getElementById('restaurant-grid');
+            const currentCards = Array.from(grid.querySelectorAll('.restaurant-card'));
+            
+            // Fade out current cards
+            if (currentCards.length > 0 && !prefersReducedMotion) {
+                anime({
+                    targets: currentCards,
+                    opacity: [1, 0],
+                    translateY: [0, -20],
+                    scale: [1, 0.95],
+                    duration: 300,
+                    delay: anime.stagger(30),
+                    easing: 'easeInCubic',
+                    complete: function() {
+                        // After fade out, render new cards
+                        originalRenderRestaurants(filteredRestaurants);
+                        
+                        // Fade in new cards
+                        const newCards = Array.from(grid.querySelectorAll('.restaurant-card'));
+                        anime({
+                            targets: newCards,
+                            opacity: [0, 1],
+                            translateY: [30, 0],
+                            scale: [0.95, 1],
+                            duration: 500,
+                            delay: anime.stagger(50, {grid: [3, 14], from: 'first'}),
+                            easing: 'easeOutCubic',
+                            complete: function() {
+                                // Re-attach hover animations to new cards
+                                attachCardHoverAnimations();
+                            }
+                        });
+                    }
+                });
+            } else {
+                // Initial render or reduced motion
+                originalRenderRestaurants(filteredRestaurants);
+                if (!prefersReducedMotion) {
+                    attachCardHoverAnimations();
+                }
+            }
+        };
+
+        // Function to attach hover animations to cards
+        function attachCardHoverAnimations() {
+            const cards = document.querySelectorAll('.restaurant-card');
+            cards.forEach(card => {
+                // Remove any existing listeners to prevent duplicates
+                card.replaceWith(card.cloneNode(true));
+            });
+            
+            // Re-select and attach new listeners
+            const newCards = document.querySelectorAll('.restaurant-card');
+            newCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    if (!prefersReducedMotion) {
+                        anime({
+                            targets: this,
+                            scale: 1.03,
+                            duration: 400,
+                            easing: 'easeOutQuad'
+                        });
+                    }
+                });
+
+                card.addEventListener('mouseleave', function() {
+                    if (!prefersReducedMotion) {
+                        anime({
+                            targets: this,
+                            scale: 1,
+                            duration: 400,
+                            easing: 'easeOutQuad'
+                        });
+                    }
+                });
+            });
+        }
+
+        // 8. SEARCH INPUT FOCUS ANIMATION
+        const searchInput = document.getElementById('search');
+        searchInput.addEventListener('focus', function() {
+            if (!prefersReducedMotion) {
+                anime({
+                    targets: '.search-icon',
+                    scale: [1, 1.2, 1],
+                    rotate: [0, 15, -15, 0],
+                    duration: 500,
+                    easing: 'easeOutElastic(1, .6)'
+                });
+            }
+        });
+
+        // 9. FILTER SELECT ANIMATIONS
+        const selects = document.querySelectorAll('.search-filter select');
+        selects.forEach(select => {
+            select.addEventListener('focus', function() {
+                if (!prefersReducedMotion) {
+                    anime({
+                        targets: this,
+                        scale: [1, 1.02],
+                        duration: 300,
+                        easing: 'easeOutQuad'
+                    });
+                }
+            });
+
+            select.addEventListener('blur', function() {
+                if (!prefersReducedMotion) {
+                    anime({
+                        targets: this,
+                        scale: [1.02, 1],
+                        duration: 300,
+                        easing: 'easeOutQuad'
+                    });
+                }
+            });
+
+            select.addEventListener('change', function() {
+                if (!prefersReducedMotion) {
+                    // Pulse animation on filter change
+                    anime({
+                        targets: this,
+                        scale: [1, 1.05, 1],
+                        duration: 400,
+                        easing: 'easeOutElastic(1, .5)'
+                    });
+                }
+            });
+        });
+
+        // 10. SCROLL REVEAL - Animate cards as they enter viewport
+        if (!prefersReducedMotion) {
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && entry.target.style.opacity === '0') {
+                        anime({
+                            targets: entry.target,
+                            opacity: [0, 1],
+                            translateY: [30, 0],
+                            duration: 600,
+                            easing: 'easeOutCubic'
+                        });
+                    }
+                });
+            }, observerOptions);
+
+            // Observe cards for scroll animations
+            setTimeout(() => {
+                document.querySelectorAll('.restaurant-card').forEach(card => {
+                    observer.observe(card);
+                });
+            }, 2000);
+        }
+
+        // 11. FOOD-THEMED ANIMATION - Floating ingredients effect in hero
+        if (!prefersReducedMotion) {
+            const foodEmojis = ['🍕', '🥗', '🍝', '🥞', '🌮'];
+            const hero = document.querySelector('.hero');
+            
+            // Create floating food elements
+            foodEmojis.forEach((emoji, index) => {
+                const foodEl = document.createElement('div');
+                foodEl.textContent = emoji;
+                foodEl.style.position = 'absolute';
+                foodEl.style.fontSize = '2rem';
+                foodEl.style.opacity = '0.2';
+                foodEl.style.zIndex = '0';
+                foodEl.style.left = `${15 + index * 18}%`;
+                foodEl.style.top = '60%';
+                hero.appendChild(foodEl);
+
+                // Floating animation
+                anime({
+                    targets: foodEl,
+                    translateY: [0, -50, 0],
+                    translateX: [0, Math.random() * 30 - 15, 0],
+                    rotate: [0, 360],
+                    duration: 8000 + Math.random() * 4000,
+                    easing: 'easeInOutQuad',
+                    loop: true,
+                    delay: index * 500
+                });
+            });
+        }
+
+        // 12. COUNT-UP ON SCROLL - Re-animate stats when scrolling back up
+        let statsAnimated = false;
+        window.addEventListener('scroll', () => {
+            if (!prefersReducedMotion) {
+                const statsSection = document.querySelector('.stats');
+                const rect = statsSection.getBoundingClientRect();
+                
+                if (rect.top < window.innerHeight && rect.bottom > 0 && !statsAnimated) {
+                    statsAnimated = true;
+                }
+                
+                // Reset flag when scrolled away
+                if (rect.bottom < 0 || rect.top > window.innerHeight) {
+                    statsAnimated = false;
+                }
+            }
+        });
     </script>
 </body>
 </html>
