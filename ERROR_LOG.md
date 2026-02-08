@@ -1,0 +1,1 @@
+# Project build failed due to Astro not being installed

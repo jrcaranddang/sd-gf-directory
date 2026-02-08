@@ -1,0 +1,196 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import restaurants from '../../data/restaurants.json';
+
+export async function getStaticPaths() {
+  return restaurants.map((restaurant) => {
+    const slug = restaurant.name.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '');
+    return {
+      params: { slug },
+      props: { restaurant },
+    };
+  });
+}
+
+const { restaurant } = Astro.props;
+---
+
+<BaseLayout title={`${restaurant.name} - Gluten-Free in San Diego`}>
+  <main class="restaurant-detail">
+    <section class="detail-hero">
+      <div class="container">
+        <a href="/" class="back-link">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+          Back to Directory
+        </a>
+        <div class="hero-content">
+          <h1>{restaurant.name}</h1>
+          <div class="badges">
+            <span class="badge price">{restaurant.price}</span>
+            <span class="badge cuisine">{restaurant.cuisine}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="info-section">
+      <div class="container grid">
+        <div class="main-info">
+          <div class="info-card">
+            <h2>Safety Details</h2>
+            <div class="safety-badge" style={`color: var(--accent-primary); border: 1px solid var(--accent-primary);`}>
+              {restaurant.gfOptions}
+            </div>
+            <p class="notes">{restaurant.notes}</p>
+          </div>
+          
+          <div class="info-card">
+            <h2>About</h2>
+            <p>Located in <strong>{restaurant.neighborhood}</strong>, {restaurant.name} is a top choice for gluten-free dining in San Diego.</p>
+          </div>
+        </div>
+
+        <aside class="sidebar">
+          <div class="info-card">
+            <h2>Contact & Location</h2>
+            <div class="contact-list">
+              <div class="contact-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+                <span>{restaurant.address}</span>
+              </div>
+              <div class="contact-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                <span>{restaurant.phone}</span>
+              </div>
+              <div class="contact-item">
+                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+                <a href={`https://${restaurant.website}`} target="_blank" rel="noopener">{restaurant.website}</a>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+  </main>
+</BaseLayout>
+
+<style>
+  .detail-hero {
+    background-color: var(--text-primary);
+    color: var(--bg-primary);
+    padding: 4rem 0 6rem;
+  }
+
+  .back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    color: var(--accent-primary);
+    text-decoration: none;
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 2rem;
+  }
+
+  .back-link:hover {
+    text-decoration: underline;
+  }
+
+  h1 {
+    font-size: 3.5rem;
+    margin-bottom: 1rem;
+  }
+
+  .badges {
+    display: flex;
+    gap: 1rem;
+  }
+
+  .badge {
+    padding: 0.3rem 0.8rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    background: rgba(250, 246, 241, 0.1);
+    color: var(--bg-secondary);
+  }
+
+  .info-section {
+    padding: 4rem 0;
+    margin-top: -3rem;
+  }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 1fr 350px;
+    gap: 2rem;
+  }
+
+  .info-card {
+    background: var(--bg-card);
+    padding: 2rem;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    box-shadow: var(--shadow-sm);
+    margin-bottom: 2rem;
+  }
+
+  .info-card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 1.5rem;
+    color: var(--text-primary);
+  }
+
+  .safety-badge {
+    display: inline-block;
+    padding: 0.4rem 1rem;
+    border-radius: 4px;
+    font-size: 0.9rem;
+    font-weight: 700;
+    margin-bottom: 1.5rem;
+  }
+
+  .notes {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.7;
+  }
+
+  .contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .contact-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    font-size: 0.95rem;
+    color: var(--text-secondary);
+  }
+
+  .contact-item svg {
+    flex-shrink: 0;
+    margin-top: 0.2rem;
+    color: var(--accent-primary);
+  }
+
+  .contact-item a {
+    color: var(--accent-primary);
+    text-decoration: none;
+  }
+
+  .contact-item a:hover {
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+    h1 {
+      font-size: 2.5rem;
+    }
+  }
+</style>

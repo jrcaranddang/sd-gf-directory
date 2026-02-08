@@ -1,0 +1,89 @@
+---
+interface Props {
+	title: string;
+	description?: string;
+}
+
+const { title, description = "Complete directory of gluten-free and celiac-safe restaurants in San Diego." } = Astro.props;
+---
+
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		<meta name="description" content={description} />
+		
+		<link rel="preconnect" href="https://fonts.googleapis.com">
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+		<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,100..900,0..100&family=Outfit:wght@100..900&family=JetBrains+Mono:wght@100..800&display=swap" rel="stylesheet">
+		
+		<style is:global>
+			:root {
+				/* Sand & warmth */
+				--bg-primary: #faf6f1;
+				--bg-secondary: #f0ebe4;
+				--bg-card: #ffffff;
+
+				/* Deep ocean ink */
+				--text-primary: #1a1a2e;
+				--text-secondary: #4a4a68;
+				--text-tertiary: #8888a0;
+
+				/* Terracotta accent */
+				--accent-primary: #c45d3e;
+				--accent-hover: #a94b2f;
+
+				/* Trust signals */
+				--gf-verified: #2a7d5f;
+				--gf-dedicated: #5a9e7c;
+				--gf-menu: #d4a853;
+				--gf-options: #7b8fb2;
+
+				/* Borders & shadows */
+				--border: #e4dfd8;
+				--shadow-sm: 0 1px 3px rgba(26, 26, 46, 0.06);
+				--shadow-md: 0 4px 12px rgba(26, 26, 46, 0.08);
+				--shadow-lg: 0 12px 40px rgba(26, 26, 46, 0.12);
+			}
+
+			* {
+				margin: 0;
+				padding: 0;
+				box-sizing: border-box;
+			}
+
+			body {
+				font-family: 'Outfit', sans-serif;
+				background-color: var(--bg-primary);
+				color: var(--text-primary);
+				line-height: 1.6;
+				-webkit-font-smoothing: antialiased;
+			}
+
+			h1, h2, h3, h4, h5, h6 {
+				font-family: 'Fraunces', serif;
+				font-variation-settings: "SOFT" 50;
+				font-weight: 700;
+				line-height: 1.2;
+			}
+
+			.container {
+				max-width: 1200px;
+				margin: 0 auto;
+				padding: 0 1.5rem;
+			}
+
+			/* Utility for typography */
+			.text-mono {
+				font-family: 'JetBrains+Mono', monospace;
+			}
+		</style>
+	</head>
+	<body>
+		<slot />
+	</body>
+</html>

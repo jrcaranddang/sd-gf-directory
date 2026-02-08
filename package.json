@@ -1,0 +1,16 @@
+{
+  "name": "California Coastal Editorial",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "astro dev",
+    "build": "astro build"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "astro": "^5.17.1"
+  }
+}

@@ -1,0 +1,174 @@
+---
+interface Props {
+	restaurant: {
+		name: string;
+		neighborhood: string;
+		address: string;
+		phone: string;
+		website: string;
+		gfOptions: string;
+		cuisine: string;
+		price: string;
+		notes: string;
+		rating: string;
+	};
+}
+
+const { restaurant } = Astro.props;
+
+// Map GF options to colors and icons
+const getGfStyle = (option: string) => {
+	const opt = option.toLowerCase();
+	if (opt.includes('100%')) return { color: 'var(--gf-verified)', label: '100% Gluten-Free' };
+	if (opt.includes('dedicated')) return { color: 'var(--gf-dedicated)', label: 'Dedicated GF Menu' };
+	if (opt.includes('menu')) return { color: 'var(--gf-menu)', label: 'GF Menu Available' };
+	return { color: 'var(--gf-options)', label: 'GF Options' };
+};
+
+const gfStyle = getGfStyle(restaurant.gfOptions);
+---
+
+<div class="card" style={`border-left: 4px solid ${gfStyle.color}`}>
+	<div class="card-content">
+		<div class="header">
+			<h3>{restaurant.name}</h3>
+			<span class="price-badge">{restaurant.price}</span>
+		</div>
+		
+		<div class="meta">
+			<span class="neighborhood">
+				<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
+				{restaurant.neighborhood}
+			</span>
+			<span class="cuisine">{restaurant.cuisine}</span>
+		</div>
+
+		<div class="gf-tag" style={`background-color: ${gfStyle.color}15; color: ${gfStyle.color}`}>
+			<span class="text-mono">{gfStyle.label}</span>
+		</div>
+
+		<p class="notes">{restaurant.notes}</p>
+
+		<div class="contact-info">
+			<a href={`https://${restaurant.website}`} target="_blank" rel="noopener" class="link">
+				<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
+				{restaurant.website}
+			</a>
+			<span class="address">
+				<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path><polyline points="9 22 9 12 15 12 15 22"></polyline></svg>
+				{restaurant.address}
+			</span>
+		</div>
+	</div>
+</div>
+
+<style>
+	.card {
+		background: var(--bg-card);
+		border-radius: 4px;
+		box-shadow: var(--shadow-sm);
+		transition: transform 0.2s ease, box-shadow 0.2s ease;
+		height: 100%;
+		display: flex;
+		flex-direction: column;
+		border: 1px solid var(--border);
+	}
+
+	.card:hover {
+		transform: translateY(-4px);
+		box-shadow: var(--shadow-md);
+	}
+
+	.card-content {
+		padding: 1.5rem;
+		display: flex;
+		flex-direction: column;
+		height: 100%;
+	}
+
+	.header {
+		display: flex;
+		justify-content: space-between;
+		align-items: flex-start;
+		margin-bottom: 0.5rem;
+	}
+
+	h3 {
+		font-size: 1.4rem;
+		color: var(--text-primary);
+		margin: 0;
+	}
+
+	.price-badge {
+		font-family: 'JetBrains Mono', monospace;
+		font-size: 0.8rem;
+		color: var(--text-tertiary);
+		background: var(--bg-secondary);
+		padding: 0.2rem 0.5rem;
+		border-radius: 4px;
+	}
+
+	.meta {
+		display: flex;
+		gap: 1rem;
+		margin-bottom: 1rem;
+		font-size: 0.85rem;
+		color: var(--text-secondary);
+	}
+
+	.neighborhood, .cuisine {
+		display: flex;
+		align-items: center;
+		gap: 0.4rem;
+	}
+
+	.gf-tag {
+		display: inline-block;
+		padding: 0.2rem 0.6rem;
+		border-radius: 4px;
+		font-size: 0.75rem;
+		font-weight: 700;
+		margin-bottom: 1rem;
+		width: fit-content;
+	}
+
+	.notes {
+		font-size: 0.95rem;
+		color: var(--text-secondary);
+		margin-bottom: 1.5rem;
+		flex-grow: 1;
+	}
+
+	.contact-info {
+		border-top: 1px solid var(--border);
+		padding-top: 1rem;
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		font-size: 0.85rem;
+		color: var(--text-tertiary);
+	}
+
+	.link {
+		color: var(--accent-primary);
+		text-decoration: none;
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-weight: 500;
+	}
+
+	.link:hover {
+		text-decoration: underline;
+	}
+
+	.address {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	svg {
+		opacity: 0.6;
+	}
+</style>
