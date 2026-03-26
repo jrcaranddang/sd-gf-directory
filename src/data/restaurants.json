@@ -9,7 +9,8 @@
     "cuisine": "American/Healthy",
     "price": "$$",
     "notes": "Extensive GF menu with clear labeling. Staff very knowledgeable about celiac.",
-    "rating": "\u2b50\u2b50\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐⭐⭐",
+    "featured": true
   },
   {
     "name": "Bronx Pizza",
@@ -21,7 +22,8 @@
     "cuisine": "Pizza",
     "price": "$$",
     "notes": "Dedicated GF pizza! Separate prep area.",
-    "rating": "\u2b50\u2b50\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐⭐⭐",
+    "featured": true
   },
   {
     "name": "Cafe Gratitude",
@@ -33,7 +35,8 @@
     "cuisine": "Vegan/Organic",
     "price": "$$",
     "notes": "Entirely plant-based and gluten-free!",
-    "rating": "\u2b50\u2b50\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐⭐⭐",
+    "featured": true
   },
   {
     "name": "Trilogy Sanctuary",
@@ -45,7 +48,8 @@
     "cuisine": "Vegan/Yoga",
     "price": "$$",
     "notes": "Rooftop yoga + cafe. Everything is GF!",
-    "rating": "\u2b50\u2b50\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐⭐⭐",
+    "featured": false
   },
   {
     "name": "The Cottage",
@@ -57,7 +61,8 @@
     "cuisine": "Breakfast/Brunch",
     "price": "$$",
     "notes": "GF pancakes and bread available. Popular brunch spot.",
-    "rating": "\u2b50\u2b50\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐⭐⭐",
+    "featured": false
   },
   {
     "name": "Snooze AM Eatery",
@@ -69,7 +74,8 @@
     "cuisine": "Breakfast",
     "price": "$$",
     "notes": "Extensive GF breakfast menu including pancakes.",
-    "rating": "\u2b50\u2b50\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐⭐⭐",
+    "featured": false
   },
   {
     "name": "Puesto",
@@ -81,7 +87,8 @@
     "cuisine": "Mexican",
     "price": "$$",
     "notes": "100% corn tortillas (naturally GF). Check about cross-contamination.",
-    "rating": "\u2b50\u2b50\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐⭐⭐",
+    "featured": false
   },
   {
     "name": "Flower Child",
@@ -93,7 +100,8 @@
     "cuisine": "Healthy/Bowls",
     "price": "$$",
     "notes": "Most items naturally GF. Great for celiacs.",
-    "rating": "\u2b50\u2b50\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐⭐⭐",
+    "featured": false
   },
   {
     "name": "Cucina Urbana",
@@ -105,7 +113,8 @@
     "cuisine": "Italian",
     "price": "$$",
     "notes": "GF pasta options. Nice atmosphere for dinner.",
-    "rating": "\u2b50\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐⭐",
+    "featured": false
   },
   {
     "name": "Tender Greens",
@@ -117,7 +126,8 @@
     "cuisine": "Salads/Healthy",
     "price": "$$",
     "notes": "Many naturally GF options. Ask about cross-contamination.",
-    "rating": "\u2b50\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐⭐",
+    "featured": false
   },
   {
     "name": "Seasons 52",
@@ -129,7 +139,8 @@
     "cuisine": "American",
     "price": "$$",
     "notes": "Seasonal menu with dedicated GF options.",
-    "rating": "\u2b50\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐⭐",
+    "featured": false
   },
   {
     "name": "Hash House A Go Go",
@@ -141,7 +152,8 @@
     "cuisine": "American/Breakfast",
     "price": "$$",
     "notes": "Large portions. GF pancakes and some other options.",
-    "rating": "\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐",
+    "featured": false
   },
   {
     "name": "Bluewater Grill",
@@ -153,7 +165,8 @@
     "cuisine": "Seafood",
     "price": "$$",
     "notes": "Fresh seafood with GF preparations available.",
-    "rating": "\u2b50\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐⭐",
+    "featured": false
   },
   {
     "name": "Kettner Exchange",
@@ -165,7 +178,8 @@
     "cuisine": "New American",
     "price": "$$$",
     "notes": "Upscale dining with accommodating staff.",
-    "rating": "\u2b50\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐⭐",
+    "featured": false
   },
   {
     "name": "Pesto's",
@@ -177,7 +191,8 @@
     "cuisine": "Italian",
     "price": "$$",
     "notes": "GF pasta available. Nice neighborhood spot.",
-    "rating": "\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐",
+    "featured": false
   },
   {
     "name": "Parakeet Cafe",
@@ -189,7 +204,8 @@
     "cuisine": "Cafe/Healthy",
     "price": "$$",
     "notes": "Many GF breakfast and lunch options.",
-    "rating": "\u2b50\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐⭐",
+    "featured": false
   },
   {
     "name": "Bencotto",
@@ -201,7 +217,8 @@
     "cuisine": "Italian",
     "price": "$$",
     "notes": "Fresh pasta with GF option. Authentic Italian.",
-    "rating": "\u2b50\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐⭐",
+    "featured": false
   },
   {
     "name": "Karina's",
@@ -213,7 +230,8 @@
     "cuisine": "Peruvian/Ceviche",
     "price": "$$",
     "notes": "Most ceviche is naturally GF. Ask about sauces.",
-    "rating": "\u2b50\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐⭐",
+    "featured": false
   },
   {
     "name": "The Prado",
@@ -225,7 +243,8 @@
     "cuisine": "Latin American",
     "price": "$$$",
     "notes": "Beautiful setting in Balboa Park. GF options available.",
-    "rating": "\u2b50\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐⭐",
+    "featured": false
   },
   {
     "name": "Morning Glory",
@@ -237,7 +256,8 @@
     "cuisine": "Breakfast/Brunch",
     "price": "$$",
     "notes": "GF pancakes and waffles. Cozy neighborhood cafe.",
-    "rating": "\u2b50\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐⭐",
+    "featured": false
   },
   {
     "name": "Urban Plates",
@@ -249,7 +269,8 @@
     "cuisine": "Healthy/Fast-Casual",
     "price": "$$",
     "notes": "Clearly marked GF items. Good for quick healthy meal.",
-    "rating": "\u2b50\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐⭐",
+    "featured": false
   },
   {
     "name": "Board & Brew",
@@ -261,7 +282,8 @@
     "cuisine": "Sandwiches",
     "price": "$",
     "notes": "GF bread for sandwiches. Local chain.",
-    "rating": "\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐",
+    "featured": false
   },
   {
     "name": "Godfather",
@@ -273,7 +295,8 @@
     "cuisine": "Burgers",
     "price": "$$",
     "notes": "GF buns available for burgers.",
-    "rating": "\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐",
+    "featured": false
   },
   {
     "name": "Corvette Diner",
@@ -285,7 +308,8 @@
     "cuisine": "American/Diner",
     "price": "$$",
     "notes": "50s diner with GF options. Fun atmosphere.",
-    "rating": "\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐",
+    "featured": false
   },
   {
     "name": "Juniper & Ivy",
@@ -297,7 +321,8 @@
     "cuisine": "New American",
     "price": "$$$",
     "notes": "High-end dining. Chef works with dietary restrictions.",
-    "rating": "\u2b50\u2b50\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐⭐⭐",
+    "featured": false
   },
   {
     "name": "The Mission",
@@ -309,7 +334,8 @@
     "cuisine": "Latin/Breakfast",
     "price": "$$",
     "notes": "GF tortillas and some other options. Popular brunch.",
-    "rating": "\u2b50\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐⭐",
+    "featured": false
   },
   {
     "name": "Sipz",
@@ -321,7 +347,8 @@
     "cuisine": "Asian Fusion",
     "price": "$$",
     "notes": "Vegetarian restaurant with many GF options.",
-    "rating": "\u2b50\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐⭐",
+    "featured": false
   },
   {
     "name": "Cafe 21",
@@ -333,7 +360,8 @@
     "cuisine": "Mediterranean",
     "price": "$$",
     "notes": "GF bread available. Farm-to-table focus.",
-    "rating": "\u2b50\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐⭐",
+    "featured": false
   },
   {
     "name": "Giuseppe",
@@ -345,7 +373,8 @@
     "cuisine": "Italian",
     "price": "$$",
     "notes": "Traditional Italian with GF pasta option.",
-    "rating": "\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐",
+    "featured": false
   },
   {
     "name": "Fig Tree Cafe",
@@ -357,7 +386,8 @@
     "cuisine": "Breakfast/American",
     "price": "$$",
     "notes": "GF pancakes and other breakfast items.",
-    "rating": "\u2b50\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐⭐",
+    "featured": false
   },
   {
     "name": "Richard Walker's Pancake House",
@@ -369,7 +399,8 @@
     "cuisine": "Breakfast",
     "price": "$$",
     "notes": "Famous for pancakes - GF version available.",
-    "rating": "\u2b50\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐⭐",
+    "featured": false
   },
   {
     "name": "Plant Power",
@@ -381,7 +412,8 @@
     "cuisine": "Vegan Fast Food",
     "price": "$$",
     "notes": "Plant-based fast food with GF options clearly marked.",
-    "rating": "\u2b50\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐⭐",
+    "featured": false
   },
   {
     "name": "Olive + Basil",
@@ -393,7 +425,8 @@
     "cuisine": "Italian",
     "price": "$$",
     "notes": "Neighborhood Italian spot with GF pasta.",
-    "rating": "\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐",
+    "featured": false
   },
   {
     "name": "Pizza Nova",
@@ -405,7 +438,8 @@
     "cuisine": "Pizza",
     "price": "$$",
     "notes": "GF pizza available. Waterfront location.",
-    "rating": "\u2b50\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐⭐",
+    "featured": false
   },
   {
     "name": "Lola 55",
@@ -417,7 +451,8 @@
     "cuisine": "Mexican",
     "price": "$$",
     "notes": "Tacos on corn tortillas. Baja-style.",
-    "rating": "\u2b50\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐⭐",
+    "featured": false
   },
   {
     "name": "Urge Gastropub",
@@ -429,7 +464,8 @@
     "cuisine": "American/Burgers",
     "price": "$$",
     "notes": "GF buns for burgers and some other options.",
-    "rating": "\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐",
+    "featured": false
   },
   {
     "name": "The Kebab Shop",
@@ -441,7 +477,8 @@
     "cuisine": "Mediterranean/Fast-Casual",
     "price": "$",
     "notes": "Rice bowls are GF. Skip the pita.",
-    "rating": "\u2b50\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐⭐",
+    "featured": false
   },
   {
     "name": "Queenstown Public House",
@@ -453,7 +490,8 @@
     "cuisine": "New Zealand/Gastropub",
     "price": "$$",
     "notes": "Some GF options available. Great beer selection.",
-    "rating": "\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐",
+    "featured": false
   },
   {
     "name": "Chipotle",
@@ -465,7 +503,8 @@
     "cuisine": "Mexican/Fast-Casual",
     "price": "$",
     "notes": "Corn tortillas/bowls are GF. Watch cross-contamination.",
-    "rating": "\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐",
+    "featured": false
   },
   {
     "name": "In-N-Out Burger",
@@ -477,6 +516,7 @@
     "cuisine": "Burgers",
     "price": "$",
     "notes": "Lettuce wrap instead of bun. Fries may have cross-contamination.",
-    "rating": "\u2b50\u2b50\u2b50"
+    "rating": "⭐⭐⭐",
+    "featured": false
   }
 ]

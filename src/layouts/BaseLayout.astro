@@ -2,9 +2,16 @@
 interface Props {
 	title: string;
 	description?: string;
+	canonicalUrl?: string;
+	ogImage?: string;
 }
 
-const { title, description = "Complete directory of gluten-free and celiac-safe restaurants in San Diego." } = Astro.props;
+const {
+	title,
+	description = "Complete directory of gluten-free and celiac-safe restaurants in San Diego.",
+	canonicalUrl = Astro.url.href,
+	ogImage = "/og-image.png"
+} = Astro.props;
 ---
 
 <!DOCTYPE html>
@@ -16,11 +23,31 @@ const { title, description = "Complete directory of gluten-free and celiac-safe 
 		<meta name="generator" content={Astro.generator} />
 		<title>{title}</title>
 		<meta name="description" content={description} />
-		
+		<link rel="canonical" href={canonicalUrl} />
+
+		<!-- Open Graph / Social Sharing -->
+		<meta property="og:type" content="website" />
+		<meta property="og:url" content={canonicalUrl} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:image" content={ogImage} />
+		<meta property="og:site_name" content="SD Gluten-Free" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={ogImage} />
+
+		<!-- Fonts -->
 		<link rel="preconnect" href="https://fonts.googleapis.com">
 		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 		<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght,SOFT@9..144,100..900,0..100&family=Outfit:wght@100..900&family=JetBrains+Mono:wght@100..800&display=swap" rel="stylesheet">
-		
+
+		<!--
+			Google AdSense — uncomment and replace ca-pub-XXXXXXXXXX with your Publisher ID
+			after your site is approved at https://adsense.google.com
+		-->
+		<!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXX" crossorigin="anonymous"></script> -->
+
 		<style is:global>
 			:root {
 				/* Sand & warmth */
@@ -42,6 +69,11 @@ const { title, description = "Complete directory of gluten-free and celiac-safe 
 				--gf-dedicated: #5a9e7c;
 				--gf-menu: #d4a853;
 				--gf-options: #7b8fb2;
+
+				/* Featured/Sponsored gold */
+				--featured-gold: #c9973a;
+				--featured-gold-bg: #fdf6e8;
+				--featured-gold-border: #e8c97a;
 
 				/* Borders & shadows */
 				--border: #e4dfd8;
@@ -77,13 +109,94 @@ const { title, description = "Complete directory of gluten-free and celiac-safe 
 				padding: 0 1.5rem;
 			}
 
-			/* Utility for typography */
 			.text-mono {
-				font-family: 'JetBrains+Mono', monospace;
+				font-family: 'JetBrains Mono', monospace;
+			}
+
+			/* Global nav */
+			.site-nav {
+				background: var(--text-primary);
+				border-bottom: 1px solid rgba(255,255,255,0.08);
+				position: sticky;
+				top: 0;
+				z-index: 100;
+			}
+
+			.site-nav .nav-inner {
+				max-width: 1200px;
+				margin: 0 auto;
+				padding: 0 1.5rem;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				height: 56px;
+			}
+
+			.nav-logo {
+				font-family: 'Fraunces', serif;
+				font-size: 1.1rem;
+				font-weight: 700;
+				color: var(--bg-primary);
+				text-decoration: none;
+				letter-spacing: -0.01em;
+			}
+
+			.nav-logo span {
+				color: var(--accent-primary);
+			}
+
+			.nav-links {
+				display: flex;
+				align-items: center;
+				gap: 0.25rem;
+				list-style: none;
+			}
+
+			.nav-links a {
+				color: rgba(250, 246, 241, 0.7);
+				text-decoration: none;
+				font-size: 0.875rem;
+				font-weight: 500;
+				padding: 0.4rem 0.75rem;
+				border-radius: 4px;
+				transition: all 0.15s ease;
+			}
+
+			.nav-links a:hover {
+				color: var(--bg-primary);
+				background: rgba(255,255,255,0.08);
+			}
+
+			.nav-links a.nav-cta {
+				background: var(--accent-primary);
+				color: white;
+				margin-left: 0.5rem;
+			}
+
+			.nav-links a.nav-cta:hover {
+				background: var(--accent-hover);
+			}
+
+			@media (max-width: 600px) {
+				.nav-links .nav-hide-mobile {
+					display: none;
+				}
 			}
 		</style>
 	</head>
 	<body>
+		<!-- Sticky Navigation -->
+		<nav class="site-nav">
+			<div class="nav-inner">
+				<a href="/" class="nav-logo">SD <span>Gluten-Free</span></a>
+				<ul class="nav-links">
+					<li><a href="/" class="nav-hide-mobile">Directory</a></li>
+					<li><a href="/essentials" class="nav-hide-mobile">GF Essentials</a></li>
+					<li><a href="/advertise" class="nav-cta">Advertise</a></li>
+				</ul>
+			</div>
+		</nav>
+
 		<slot />
 	</body>
 </html>
