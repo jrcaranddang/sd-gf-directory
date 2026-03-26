@@ -13,9 +13,45 @@ export async function getStaticPaths() {
 }
 
 const { restaurant } = Astro.props;
+
+const getGfStyle = (option: string) => {
+  const opt = option.toLowerCase();
+  if (opt.includes('100%')) return { color: 'var(--gf-verified)' };
+  if (opt.includes('dedicated')) return { color: 'var(--gf-dedicated)' };
+  if (opt.includes('menu')) return { color: 'var(--gf-menu)' };
+  return { color: 'var(--gf-options)' };
+};
+
+const gfStyle = getGfStyle(restaurant.gfOptions);
+
+// JSON-LD structured data for Google
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Restaurant",
+  "name": restaurant.name,
+  "description": restaurant.notes,
+  "address": {
+    "@type": "PostalAddress",
+    "streetAddress": restaurant.address,
+    "addressLocality": "San Diego",
+    "addressRegion": "CA",
+    "addressCountry": "US"
+  },
+  "telephone": restaurant.phone,
+  "url": `https://${restaurant.website}`,
+  "servesCuisine": restaurant.cuisine,
+  "priceRange": restaurant.price,
+  "hasMenu": `https://${restaurant.website}`,
+};
 ---
 
-<BaseLayout title={`${restaurant.name} - Gluten-Free in San Diego`}>
+<BaseLayout
+  title={`${restaurant.name} — Gluten-Free in San Diego`}
+  description={`${restaurant.name} in ${restaurant.neighborhood}: ${restaurant.notes} Gluten-free dining in San Diego.`}
+>
+  <!-- JSON-LD Structured Data -->
+  <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />
+
   <main class="restaurant-detail">
     <section class="detail-hero">
       <div class="container">
@@ -24,10 +60,17 @@ const { restaurant } = Astro.props;
           Back to Directory
         </a>
         <div class="hero-content">
+          {restaurant.featured && (
+            <div class="featured-indicator">
+              <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+              Sponsored Partner
+            </div>
+          )}
           <h1>{restaurant.name}</h1>
           <div class="badges">
             <span class="badge price">{restaurant.price}</span>
             <span class="badge cuisine">{restaurant.cuisine}</span>
+            <span class="badge neighborhood">{restaurant.neighborhood}</span>
           </div>
         </div>
       </div>
@@ -37,17 +80,35 @@ const { restaurant } = Astro.props;
       <div class="container grid">
         <div class="main-info">
           <div class="info-card">
-            <h2>Safety Details</h2>
-            <div class="safety-badge" style={`color: var(--accent-primary); border: 1px solid var(--accent-primary);`}>
+            <h2>GF Safety Details</h2>
+            <div class="safety-badge" style={`color: ${gfStyle.color}; border-color: ${gfStyle.color};`}>
               {restaurant.gfOptions}
             </div>
             <p class="notes">{restaurant.notes}</p>
           </div>
-          
+
           <div class="info-card">
             <h2>About</h2>
-            <p>Located in <strong>{restaurant.neighborhood}</strong>, {restaurant.name} is a top choice for gluten-free dining in San Diego.</p>
+            <p>
+              Located in <strong>{restaurant.neighborhood}</strong>, {restaurant.name} is a
+              {restaurant.gfOptions.toLowerCase().includes('100%') ? 'fully gluten-free' : 'gluten-free friendly'}
+              dining option in San Diego. {restaurant.cuisine} cuisine at {restaurant.price} price point.
+            </p>
           </div>
+
+          <!-- Claim Your Listing CTA (shown for non-featured restaurants) -->
+          {!restaurant.featured && (
+            <div class="claim-cta">
+              <div class="claim-cta-text">
+                <h3>Is this your restaurant?</h3>
+                <p>Claim this listing to add photos, update your GF menu details, and get a featured placement seen by thousands of local celiac diners every month.</p>
+              </div>
+              <a href="/advertise#contact" class="btn-claim">
+                Claim & Upgrade Listing
+                <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+              </a>
+            </div>
+          )}
         </div>
 
         <aside class="sidebar">
@@ -56,22 +117,49 @@ const { restaurant } = Astro.props;
             <div class="contact-list">
               <div class="contact-item">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path><circle cx="12" cy="10" r="3"></circle></svg>
-                <span>{restaurant.address}</span>
+                <span>{restaurant.address}, San Diego, CA</span>
               </div>
-              <div class="contact-item">
-                <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
-                <span>{restaurant.phone}</span>
-              </div>
+              {restaurant.phone !== 'Various' && (
+                <div class="contact-item">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"></path></svg>
+                  <a href={`tel:${restaurant.phone}`}>{restaurant.phone}</a>
+                </div>
+              )}
               <div class="contact-item">
                 <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="2" y1="12" x2="22" y2="12"></line><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"></path></svg>
                 <a href={`https://${restaurant.website}`} target="_blank" rel="noopener">{restaurant.website}</a>
               </div>
             </div>
           </div>
+
+          <!-- Sidebar: GF Essentials promo -->
+          <div class="info-card essentials-promo">
+            <h2>Dining Out GF?</h2>
+            <p>Stock up on essentials to stay safe while dining out in San Diego.</p>
+            <a href="/essentials" class="btn-essentials">Shop GF Essentials →</a>
+          </div>
         </aside>
       </div>
     </section>
   </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container footer-content">
+      <div class="footer-brand">
+        <h3>SD Gluten-Free</h3>
+        <p>Curated for the celiac community.</p>
+        <div class="footer-nav">
+          <a href="/">Directory</a>
+          <a href="/essentials">GF Essentials</a>
+          <a href="/advertise">Advertise</a>
+        </div>
+      </div>
+      <div class="footer-meta">
+        <p>&copy; 2026 SD Gluten-Free</p>
+      </div>
+    </div>
+  </footer>
 </BaseLayout>
 
 <style>
@@ -96,14 +184,30 @@ const { restaurant } = Astro.props;
     text-decoration: underline;
   }
 
+  .featured-indicator {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    background: var(--featured-gold);
+    color: white;
+    font-size: 0.72rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 0.3rem 0.75rem;
+    border-radius: 20px;
+    margin-bottom: 1rem;
+  }
+
   h1 {
-    font-size: 3.5rem;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
     margin-bottom: 1rem;
   }
 
   .badges {
     display: flex;
-    gap: 1rem;
+    flex-wrap: wrap;
+    gap: 0.75rem;
   }
 
   .badge {
@@ -116,14 +220,15 @@ const { restaurant } = Astro.props;
   }
 
   .info-section {
-    padding: 4rem 0;
+    padding: 4rem 0 5rem;
     margin-top: -3rem;
   }
 
   .grid {
     display: grid;
-    grid-template-columns: 1fr 350px;
+    grid-template-columns: 1fr 340px;
     gap: 2rem;
+    align-items: start;
   }
 
   .info-card {
@@ -132,12 +237,12 @@ const { restaurant } = Astro.props;
     border-radius: 4px;
     border: 1px solid var(--border);
     box-shadow: var(--shadow-sm);
-    margin-bottom: 2rem;
+    margin-bottom: 1.5rem;
   }
 
   .info-card h2 {
-    font-size: 1.5rem;
-    margin-bottom: 1.5rem;
+    font-size: 1.4rem;
+    margin-bottom: 1.25rem;
     color: var(--text-primary);
   }
 
@@ -147,15 +252,60 @@ const { restaurant } = Astro.props;
     border-radius: 4px;
     font-size: 0.9rem;
     font-weight: 700;
-    margin-bottom: 1.5rem;
+    margin-bottom: 1.25rem;
+    border: 1px solid;
   }
 
   .notes {
-    font-size: 1.1rem;
+    font-size: 1.05rem;
     color: var(--text-secondary);
     line-height: 1.7;
   }
 
+  /* Claim CTA */
+  .claim-cta {
+    background: var(--bg-card);
+    border: 1.5px dashed var(--border);
+    border-radius: 8px;
+    padding: 1.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1.5rem;
+  }
+
+  .claim-cta h3 {
+    font-size: 1.1rem;
+    margin-bottom: 0.4rem;
+  }
+
+  .claim-cta p {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    line-height: 1.5;
+  }
+
+  .btn-claim {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    white-space: nowrap;
+    padding: 0.7rem 1.25rem;
+    background: var(--accent-primary);
+    color: white;
+    border-radius: 4px;
+    text-decoration: none;
+    font-size: 0.875rem;
+    font-weight: 600;
+    transition: background 0.15s;
+    flex-shrink: 0;
+  }
+
+  .btn-claim:hover {
+    background: var(--accent-hover);
+  }
+
+  /* Sidebar */
   .contact-list {
     display: flex;
     flex-direction: column;
@@ -165,14 +315,14 @@ const { restaurant } = Astro.props;
   .contact-item {
     display: flex;
     align-items: flex-start;
-    gap: 1rem;
-    font-size: 0.95rem;
+    gap: 0.75rem;
+    font-size: 0.9rem;
     color: var(--text-secondary);
   }
 
   .contact-item svg {
     flex-shrink: 0;
-    margin-top: 0.2rem;
+    margin-top: 0.15rem;
     color: var(--accent-primary);
   }
 
@@ -185,12 +335,94 @@ const { restaurant } = Astro.props;
     text-decoration: underline;
   }
 
+  .essentials-promo {
+    background: var(--bg-secondary);
+    border-color: var(--border);
+  }
+
+  .essentials-promo h2 {
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .essentials-promo p {
+    font-size: 0.875rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    line-height: 1.5;
+  }
+
+  .btn-essentials {
+    color: var(--accent-primary);
+    font-size: 0.875rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .btn-essentials:hover {
+    text-decoration: underline;
+  }
+
+  /* Footer */
+  .footer {
+    background: #111122;
+    color: var(--bg-secondary);
+    padding: 3rem 0;
+  }
+
+  .footer-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+  }
+
+  .footer-brand h3 {
+    font-size: 1.2rem;
+    margin-bottom: 0.4rem;
+    color: white;
+  }
+
+  .footer-brand > p {
+    font-size: 0.875rem;
+    opacity: 0.5;
+    margin-bottom: 0.75rem;
+  }
+
+  .footer-nav {
+    display: flex;
+    gap: 1.25rem;
+  }
+
+  .footer-nav a {
+    color: rgba(250,246,241,0.45);
+    text-decoration: none;
+    font-size: 0.85rem;
+    transition: color 0.15s;
+  }
+
+  .footer-nav a:hover {
+    color: var(--bg-primary);
+  }
+
+  .footer-meta p {
+    font-size: 0.8rem;
+    opacity: 0.35;
+  }
+
   @media (max-width: 768px) {
     .grid {
       grid-template-columns: 1fr;
     }
     h1 {
-      font-size: 2.5rem;
+      font-size: 2.2rem;
+    }
+    .claim-cta {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+    .footer-content {
+      flex-direction: column;
+      gap: 1.5rem;
     }
   }
 </style>
