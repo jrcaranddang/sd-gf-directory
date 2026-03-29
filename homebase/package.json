@@ -1,0 +1,14 @@
+{
+  "name": "homebase",
+  "version": "0.1.0",
+  "description": "Personal life intelligence assistant — receipt to insight pipeline",
+  "main": "src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "test": "node --test tests/"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "latest"
+  }
+}
