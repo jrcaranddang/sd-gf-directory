@@ -1,0 +1,30 @@
+# PetMotion Supabase local config. `supabase start` uses this.
+project_id = "petmotion"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "storage", "graphql_public"]
+
+[db]
+port = 54322
+major_version = 15
+
+[storage]
+enabled = true
+file_size_limit = "10MiB"
+
+[auth]
+enabled = true
+site_url = "petmotion://"
+# Anonymous sign-in powers no-signup browsing (spec §1).
+enable_anonymous_sign_ins = true
+
+[functions.create-job]
+verify_jwt = false  # we verify the JWT ourselves to return typed error codes
+
+[functions.get-job]
+verify_jwt = false
+
+[functions.delete-account]
+verify_jwt = false
