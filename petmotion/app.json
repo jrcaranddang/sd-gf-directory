@@ -1,0 +1,53 @@
+{
+  "expo": {
+    "name": "PetMotion",
+    "slug": "petmotion",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "petmotion",
+    "userInterfaceStyle": "dark",
+    "newArchEnabled": true,
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#0B0B12"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.petmotion.app",
+      "infoPlist": {
+        "NSPhotoLibraryUsageDescription": "PetMotion needs access to your photos so you can pick a picture of your pet to animate.",
+        "NSPhotoLibraryAddUsageDescription": "PetMotion saves your generated videos to your photo library.",
+        "NSCameraUsageDescription": "PetMotion uses the camera so you can snap a photo of your pet to animate."
+      }
+    },
+    "android": {
+      "package": "com.petmotion.app",
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#0B0B12"
+      }
+    },
+    "plugins": [
+      "expo-router",
+      "expo-image-picker",
+      "expo-media-library",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/notification-icon.png",
+          "color": "#7C5CFF"
+        }
+      ]
+    ],
+    "extra": {
+      "router": {
+        "origin": false
+      },
+      "supabaseUrl": "PLACEHOLDER_SET_VIA_EAS_ENV",
+      "supabaseAnonKey": "PLACEHOLDER_SET_VIA_EAS_ENV",
+      "revenueCatApiKeyIos": "PLACEHOLDER_SET_VIA_EAS_ENV"
+    }
+  }
+}
